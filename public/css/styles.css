@@ -1,0 +1,12 @@
+.form-label {
+  color: black !important;
+}
+
+.no-resize {
+  resize: none;
+}
+
+.form-check-input {
+  border-color: #000000;
+}
+
