@@ -1,15 +1,13 @@
 
-
-
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>Fraccionamiento UPPue</title>
     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('fonts/fontawesome-all.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 
 <body id="page-top" class="sidebar-toggled">
@@ -17,7 +15,7 @@
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-secondary p-0 navbar-dark toggled">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>FRACC</span></div>
+                    <div class="sidebar-brand-text mx-3"><span>UPPue</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
@@ -46,17 +44,17 @@
                             </li>
                         </ul>
                     </div>
-                </nav>                    
-            </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © UPPue 2025</span></div>
-                </div>
-            </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+                </nav>
+
+                <div class="container-fluid">                    
+                    @yield('content')
+                </div>                
+            @include('footer')
+        </div>
     </div>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/theme.js')}}"></script>
-    @yield('scripts')
+
+    @yield('modals')
+    @include('scripts')
+
 </body> 
 </html>
