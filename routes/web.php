@@ -1,18 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\residentscontroller;
+use App\Http\Controllers\logincontroller;
+use App\Http\Controllers\visitorscontroller;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('login',[logincontroller::class,'login'])->name('login');
+Route::POST('validar',[logincontroller::class,'validar'])->name('validar');
+
+
+Route::get('reporteResidentes',[residentscontroller::class,'reporte'])->name('reporteResidentes');
+
+Route::get('dashboard',[visitorscontroller::class,'visitorsAdmin'])->name('dashboard');
+Route::get('visitantesResidentes',[visitorscontroller::class,'visitorsAdmin'])->name('visitantesResidentes');
+
+
+
+// Route::get('/', function () {
+//     return view('login');
+// });
