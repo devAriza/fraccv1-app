@@ -47,9 +47,9 @@ class Contract extends Model
 		'path_contract'
 	];
 
-	public function house_resident()
+	public function houseResident()
 	{
-		return $this->belongsTo(HouseResident::class);
+		return $this->belongsTo(HouseResident::class, 'house_resident_id');
 	}
 
 	public function transaction()

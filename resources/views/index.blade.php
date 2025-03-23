@@ -123,7 +123,7 @@
                     </div>
                     <div class="row"><label class="form-label fw-bold">Casa #23</label><label class="form-label">Renovación completada</label></div>
                     <div class="row"><label class="form-label fw-bold">Casa #56</label><label class="form-label">Cambio de propietario</label></div>
-                    <div class="row div-card"><a class="btn btn-secondary" href="/contratos.html" type="button">Panel contratos</a></div>
+                    <div class="row div-card"><a class="btn btn-secondary" href="{{route('contratosAdmin')}}" type="button">Panel contratos</a></div>
                 </div>
             </div>
         </div>

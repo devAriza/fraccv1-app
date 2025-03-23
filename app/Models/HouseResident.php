@@ -49,12 +49,12 @@ class HouseResident extends Model
 
 	public function house()
 	{
-		return $this->belongsTo(House::class);
+		return $this->belongsTo(House::class, 'house_id');
 	}
 
 	public function resident()
 	{
-		return $this->belongsTo(Resident::class);
+		return $this->belongsTo(Resident::class, 'resident_id');
 	}
 
 	public function contracts()
