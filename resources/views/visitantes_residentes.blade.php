@@ -6,7 +6,9 @@
     <h3 class="text-dark col-xl-3">Visitantes</h3><button class="btn col-xl-2 mb-0 btn-secondary col-lg-2 col-md-2" type="button" onclick="openModalCreatVisitor()"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo visitante</button>
 </div>
 <div class="card shadow">
-    <div class="card-body"></div>
+    <div class="card-body">
+        
+    </div>
 </div>
 
 @endsection

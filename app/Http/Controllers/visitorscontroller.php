@@ -10,7 +10,7 @@ class visitorscontroller extends Controller
         return view('visitantes_admin');
     }
 
-    public function visitorsResidents(){
+    public function visitorsResidentes(){
         return view('visitantes_residentes');
     }
 }

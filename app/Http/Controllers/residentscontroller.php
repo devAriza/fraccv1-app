@@ -11,8 +11,7 @@ class residentscontroller extends Controller
     public function reporte()
     {   
         
-        $residents = Resident::all();
-        return ($residents);
+        return view('index');
        
     }
 

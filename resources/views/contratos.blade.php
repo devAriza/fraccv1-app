@@ -6,7 +6,9 @@
     <h3 class="text-dark col-xl-3">Contratos</h3>
 </div>
 <div class="card shadow">
-    <div class="card-body"></div>
+    <div class="card-body">
+        <livewire:contracts-table />
+    </div>
 </div>
 
 @endsection
