@@ -7,16 +7,7 @@
     @endif
 
     <div class="container-fluid">
-        <div class="d-flex justify-content-end align-items-center row ms-0 ps-0 me-0 mb-3">
-            <div class="col-xl-4">
-                <input 
-                    type="search" 
-                    class="form-control" 
-                    placeholder="Buscar por dirección o residente"
-                    wire:model.debounce.300ms="search"
-                >
-            </div>
-        </div>
+
         
         <div class="card shadow">
             <div class="card-body">
@@ -31,9 +22,6 @@
                                 <th>Residente</th>
                                 <th>Dirección</th>
                                 <th>Documento</th>
-                                @if(Session::get('sessiontipo') == 1)
-                                <th>Acciones</th>
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -57,14 +45,7 @@
                                             <i class="fas fa-file-pdf"></i> Ver PDF
                                         </a>
                                     </td>
-                                    <td>
-                                        @if(Session::get('sessiontipo') == 1)
-                                            <button class="btn btn-sm btn-danger"
-                                                    wire:click="deleteContract({{ $contract->contract_id }})">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        @endif
-                                    </td>
+
                                 </tr>
                             @empty
                                 <tr>
@@ -78,7 +59,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>

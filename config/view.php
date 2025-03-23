@@ -15,6 +15,7 @@ return [
 
     'paths' => [
         resource_path('views'),
+        
     ],
 
     /*
@@ -33,4 +34,5 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    'pagination' => 'bootstrap-5',
 ];

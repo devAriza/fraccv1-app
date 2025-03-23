@@ -36,15 +36,17 @@ class ContractsTable extends Component
     private function getBaseQuery()
     {
         
-        if(Session::get('sessiontipo') != 1) {
+        $query = Contract::with([
+            'houseResident.resident', 
+            'houseResident.house',
+            'transaction'
+        ]);
 
-            $query = Contract::whereHas('houseResident', function($q) {
+        // Filtro por tipo de usuario
+        if(Session::get('sessiontipo') != 1) { // Si no es admin
+            $query->whereHas('houseResident', function($q) {
                 $q->where('resident_id', Session::get('sessionid'));
-            })->get();
-
-
-        }else{
-            $query = Contract::all();
+            });
         }
 
         return $query;
@@ -64,7 +66,7 @@ class ContractsTable extends Component
                         });
                     });
                 })
-                //->orderBy($this->sortField, $this->sortDirection)
+                ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10)
         ]);
     }

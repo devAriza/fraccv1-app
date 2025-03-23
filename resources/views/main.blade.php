@@ -24,7 +24,6 @@ $sessionid = session('sessionid');
 </head>
 
 <body id="page-top" class="sidebar-toggled">
-    @livewireScripts
     <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-secondary p-0 navbar-dark toggled">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">

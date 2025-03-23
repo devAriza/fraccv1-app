@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Update as LivewireUpdate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\residentscontroller;
 use App\Http\Controllers\logincontroller;
