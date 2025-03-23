@@ -32,13 +32,13 @@ class logincontroller extends Controller
 
             Session::put('sessionusuario',$consulta[0]->name);
             Session::put('sessiontipo',$consulta[0]->type_resident_id);
-            Session::put('sessionid',$consulta[0]->id_resident);
+            Session::put('sessionid',$consulta[0]->resident_id);
 
             if($consulta[0]->type_resident_id == 1){
-                return redirect()->route('dashboard');
+                return view('index');
             }
             else{
-                return redirect()->route('visitantesResidentes');
+                return view('visitantes_residentes');
             }
 
         }
@@ -53,14 +53,14 @@ class logincontroller extends Controller
 
     public function principal(){
 
-        $sessionid = session('sessionidu');
-        if($sessionidu != ""){
+        $sessionid = session('sessionid');
+        if($sessionid != ""){
 
             if(session('sessiontipo') == 1){
-                return redirect()->route('dashboard');
+                return view('index');
             }
             else{
-                return redirect()->route('visitantes_residentes');
+                return view('visitantes_residentes');
             }
 
         }
@@ -68,5 +68,15 @@ class logincontroller extends Controller
             Session::flash('mensaje', "Favor de loguearse, antes de continuar"); #Sirve solo una vez
             return redirect()->route('login');
         }
+    }
+
+    public function cerrarsesion(){
+        Session::forget('sessionusuario'); //elimina el contenido de la sesion usuario
+        Session::forget('sessiontipo');
+        Session::forget('sessionid');
+        Session::flush();
+        Session::flash('mensaje', "Sesion cerrada correctamente"); #Sirve solo una vez
+        return redirect()->route('login');  
+
     }
 }
