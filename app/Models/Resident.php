@@ -63,7 +63,7 @@ class Resident extends Model
 
 	public function houses()
 	{
-		return $this->belongsToMany(House::class, 'house_residents')
+		return $this->belongsToMany(House::class, 'house_residents', 'resident_id', 'house_id')
 					->withPivot('house_resident_id', 'role', 'start_date', 'end_date');
 	}
 
