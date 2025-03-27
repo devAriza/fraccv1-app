@@ -6,7 +6,87 @@
     <h3 class="text-dark col-xl-3">Incidencias</h3><button class="btn col-xl-2 mb-0 btn-secondary col-lg-2 col-md-2" type="button" onclick="openModalCreatIncident()"><i class="fas fa-plus-circle"></i>&nbsp; Nueva incidencia</button>
 </div>
 <div class="card shadow">
-    <div class="card-body"></div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Fecha Reporte</th>
+                        <th>Tipo</th>
+                        <th>Prioridad</th>
+                        <th>Descripción</th>
+                        <th>Residente</th>
+                        <th>Dirección</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ejemplo de incidencia 1 -->
+                    <tr>
+                        <td>2024-03-15 14:30</td>
+                        <td>
+                            <span class="badge bg-info">
+                                <i class="fas fa-tint me-1"></i>PLOMERÍA
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-danger">ALTA</span>
+                        </td>
+                        <td>Fuga en tubería principal</td>
+                        <td>Juan Pérez</td>
+                        <td>Calle Primavera #123</td>
+                        <td>
+                            <span class="badge bg-success">RESUELTO</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" 
+                                        onclick="openModalUpdateIncident(1)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" 
+                                        onclick="openModalDeleteIncident(1)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Ejemplo de incidencia 2 -->
+                    <tr>
+                        <td>2024-03-18 09:15</td>
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-bolt me-1"></i>ELECTRICIDAD
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-warning">MEDIA</span>
+                        </td>
+                        <td>Corto circuito en área común</td>
+                        <td>-</td>
+                        <td>Calle Verano #456</td>
+                        <td>
+                            <span class="badge bg-danger">PENDIENTE</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" 
+                                        onclick="openModalUpdateIncident(2)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" 
+                                        onclick="openModalDeleteIncident(2)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @endsection

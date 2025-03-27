@@ -90,7 +90,7 @@
                 </div>
                 <div class="row"><label class="form-label fw-bold">Junta vecinal</label><label class="form-label">Sábado, 15 de junio - 18:00</label></div>
                 <div class="row"><label class="form-label fw-bold">Junta vecinal</label><label class="form-label">Sábado, 15 de junio - 18:00</label></div>
-                <div class="row div-card"><a class="btn btn-secondary" href="/eventos_admin.html" type="button">Panel eventos</a></div>
+                <div class="row div-card"><a class="btn btn-secondary" href="{{route('eventosAdmin')}}" type="button">Panel eventos</a></div>
             </div>
         </div>
     </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="row"><label class="form-label fw-bold">Carlos Mendoza</label><label class="form-label">Casa #28</label></div>
                     <div class="row"><label class="form-label fw-bold">Ana García</label><label class="form-label">Casa #58</label></div>
-                    <div class="row div-card"><a class="btn btn-secondary" href="/residentes.html" type="button">Panel residentes</a></div>
+                    <div class="row div-card"><a class="btn btn-secondary" href="{{route('residentesAdmin')}}" type="button">Panel residentes</a></div>
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                     </div>
                     <div class="row"><label class="form-label fw-bold">Casa #12</label><label class="form-label d-flex justify-content-between">Mantenimiento Junio&nbsp;<span>$1,200</span></label></div>
                     <div class="row"><label class="form-label fw-bold">Casa #2</label><label class="form-label d-flex justify-content-between">Mantenimiento Junio&nbsp;<span>$1,200</span></label></div>
-                    <div class="row div-card"><a class="btn btn-secondary" href="/incidencias.html" type="button">Panel incidencias</a></div>
+                    <div class="row div-card"><a class="btn btn-secondary" href="{{route('incidenciasAdmin')}}" type="button">Panel incidencias</a></div>
                 </div>
             </div>
         </div>

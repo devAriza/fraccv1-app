@@ -6,7 +6,110 @@
     <h3 class="text-dark col-xl-4">Administración de comunicados</h3><button class="btn col-xl-2 mb-0 btn-secondary col-lg-2 col-md-2" type="button" onclick="openModalCreatEvent()"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo comunicado</button>
 </div>
 <div class="card shadow">
-    <div class="card-body"></div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Fecha/Hora</th>
+                        <th>Prioridad</th>
+                        <th>Dirección</th>
+                        <th>Documento</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ejemplo de fila -->
+                    <tr>
+                        <td>Reunión de vecinos</td>
+                        <td>
+                            <span class="badge bg-primary">EVENTO</span>
+                        </td>
+                        <td>
+                            <div>2024-03-15</div>
+                            <small>15:00 - 16:30</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-success">NORMAL</span>
+                        </td>
+                        <td>Calle Primavera #123</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <a href="/documents/evento_20240315.pdf"
+                                    class="btn btn-sm btn-link"
+                                    target="_blank"
+                                    title="Ver documento">
+                                    <i class="fas fa-file-pdf me-2"></i>evento_20240315.pdf
+                                </a>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                    onclick="downloadFile('evento_20240315.pdf')"
+                                    title="Descargar">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>2024-03-10 09:30</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary"
+                                    onclick="openModalUpdateEvent()">
+                                    <i class="fas fa-edit me-1"></i>Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="openModalDeleteEvent()">
+                                    <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila adicional con imagen -->
+                    <tr>
+                        <td>Mantenimiento piscina</td>
+                        <td>
+                            <span class="badge bg-warning text-dark">NOTICIA</span>
+                        </td>
+                        <td>2024-03-20</td>
+                        <td>
+                            <span class="badge bg-danger">URGENTE</span>
+                        </td>
+                        <td>Calle Verano #456</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <a href="/documents/img_fracto.jpg"
+                                    class="btn btn-sm btn-link"
+                                    target="_blank"
+                                    title="Ver imagen">
+                                    <i class="fas fa-file-image me-2"></i>Aviso.jpg
+                                </a>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                    onclick="downloadFile('piscina.jpg')"
+                                    title="Descargar">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>2024-03-18 14:15</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary"
+                                    onclick="openModalUpdateEvent()">
+                                    <i class="fas fa-edit me-1"></i>Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="openModalDeleteEvent()">
+                                    <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @endsection

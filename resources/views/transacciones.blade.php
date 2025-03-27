@@ -6,7 +6,74 @@
     <h3 class="text-dark col-xl-3">Transacciones</h3><button class="btn col-xl-3 mb-0 btn-secondary col-lg-3 col-md-3" type="button" onclick="openModalCreatTransaction()"><i class="fas fa-plus-circle"></i>&nbsp; Nueva transacción</button>
 </div>
 <div class="card shadow">
-    <div class="card-body"></div>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                        <th>Residente</th>
+                        <th>Dirección</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ejemplo de transacción 1 -->
+                    <tr>
+                        <td>2024-03-15 14:30</td>
+                        <td>Pago mantenimiento marzo</td>
+                        <td class="fw-bold text-success">$1,500.00</td>
+                        <td>
+                            <span class="badge bg-primary">CUOTA MANTENIMIENTO</span>
+                        </td>
+                        <td>Juan Pérez</td>
+                        <td>Calle Primavera #123</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary"
+                                    onclick="openModalUpdateTransaction()">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="openModalDeleteTransaction()">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Ejemplo de transacción 2 -->
+                    <tr>
+                        <td>2024-03-18 10:15</td>
+                        <td>Reparación tubería principal</td>
+                        <td class="fw-bold text-danger">-$750.00</td>
+                        <td>
+                            <span class="badge bg-warning text-dark">REPARACIÓN</span>
+                        </td>
+                        <td>-</td>
+                        <td>Calle Verano #456</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary"
+                                    onclick="openModalUpdateTransaction()">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="openModalDeleteTransaction()">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 </div>
 
 @endsection
