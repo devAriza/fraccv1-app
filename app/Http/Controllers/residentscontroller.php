@@ -8,12 +8,14 @@ use App\Models\ResidentsType;
 use Illuminate\Support\Facades\Hash;
 use App\Models\House;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class residentscontroller extends Controller
 {
-    
+
     public function dashboard()
-    {           
+    {
         return view('index');
     }
 
@@ -22,7 +24,7 @@ class residentscontroller extends Controller
         $residentTypes = ResidentsType::all();
         $houses = House::all();
         $residents = Resident::with(['residents_type', 'houses'])->get();
-        
+
         return view('residentes', compact('residents', 'houses', 'residentTypes'));
     }
 
@@ -53,7 +55,7 @@ class residentscontroller extends Controller
         if ($request->has('houses')) {
             foreach ($request->houses as $houseId) {
                 $resident->houses()->attach($houseId, [
-                    'role' => 'propietario', 
+                    'role' => 'propietario',
                     'start_date' => now(),
                     'end_date' => null
                 ]);
@@ -64,4 +66,24 @@ class residentscontroller extends Controller
             ->with('success', 'Residente creado exitosamente');
     }
 
+    public function testQR($format = 'pdf')
+    {
+        // // Obtener el texto desde la BD
+        // $data = Campaign::findOrFail($id); // Ajusta tu modelo y campo
+        $qrText = "KLASPOJGAGJPOSEGJPOSEGSJPO";
+
+        // Generar QR como base64 para PDF
+        $qrCode = QrCode::size(300)->format('png')->generate($qrText);
+        $base64QR = base64_encode($qrCode);
+
+        // Descargar según formato solicitado
+        if ($format === 'jpg' || $format === 'png') {
+            return response($qrCode)
+                ->header('Content-Type', 'image/png');
+        }
+
+        // Generar PDF
+        $pdf = Pdf::loadView('qr-pdf', compact('base64QR'));
+        return $pdf->download("qr-1.pdf");
+    }
 }

@@ -15,10 +15,7 @@
                     <table class="table table-hover">
                         <thead class="thead-light">
                             <tr>
-                                <th wire:click="sortBy('start_date')" style="cursor: pointer;">
-                                    Fecha Inicio 
-                                    @include('partials.sort-icon', ['field' => 'start_date'])
-                                </th>
+                                <th>Período</th>                                
                                 <th>Residente</th>
                                 <th>Dirección</th>
                                 <th>Documento</th>
