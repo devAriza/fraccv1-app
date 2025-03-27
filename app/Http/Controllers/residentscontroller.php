@@ -84,6 +84,7 @@ class residentscontroller extends Controller
 
         // Generar PDF
         $pdf = Pdf::loadView('qr-pdf', compact('base64QR'));
+        $pdf->setOption('enable_remote', true);
         return $pdf->download("qr-1.pdf");
     }
 }

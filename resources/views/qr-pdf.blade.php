@@ -11,10 +11,9 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
         }
         .header img {
-            width: 150px;
+            width: 175px;
         }
         .qr-section {
             text-align: center;
@@ -47,7 +46,7 @@
 <body>
     <!-- Encabezado con logo -->
     <div class="header">
-        <img src="{{ public_path('images/logo.png') }}" alt="Logo">
+        <img src="{{ public_path('assets/images/logo_qr.png') }}" alt="Logo">
         <h2>ACCESO</h2>
         <p>Generado el: {{ now()->format('d/m/Y') }}</p>
     </div>
@@ -55,12 +54,8 @@
     <!-- Información adicional -->
     <table class="info-table">
         <tr>
-            <td>Empresa</td>
-            <td>UPPue</td>
-        </tr>
-        <tr>
-            <td>Referencia</td>
-            <td>QR-2024-001</td>
+            <td>Fraccionamiento</td>
+            <td>Puerta de Hierro</td>
         </tr>
     </table>
 
