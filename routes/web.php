@@ -27,6 +27,7 @@ Route::get('contratosAdmin',[contractscontroller::class,'contratosAdmin'])->name
 /* Residentes */
 Route::get('residentesAdmin',[residentscontroller::class,'residentsAdmin'])->name('residentesAdmin');
 Route::POST('crearResidentes',[residentscontroller::class,'crearResidentes'])->name('crearResidentes');
+//Route::get('/residents/{id}/edit', [residentscontroller::class, 'edit'])->name('residents.edit');
 Route::get('testQR',[residentscontroller::class,'testQR'])->name('testQR');
 
 /* Visitantes */

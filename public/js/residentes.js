@@ -12,8 +12,14 @@ function openModalCreatResident(){
     modalCreatResident.show();
 }
 
-function openModalUpdateResident(){
+function openModalUpdateResident(resident_id, name, phone, email, house, type){
     modalUpdateResident.show();
+    d.getElementById("editNameResident").value = name;
+    d.getElementById("editPhoneResident").value = phone;
+    d.getElementById("editEmailResident").value = email;
+    d.getElementById("editHouseResident").value = house;
+    d.getElementById("editTypeResident").value = type;
+
 }
 
 function openModalDeleteResident(){

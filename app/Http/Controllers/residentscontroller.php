@@ -7,6 +7,10 @@ use App\Models\Resident;
 use App\Models\ResidentsType;
 use Illuminate\Support\Facades\Hash;
 use App\Models\House;
+use App\Models\HouseResident;
+use Illuminate\Support\Facades\DB;
+
+
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -21,11 +25,40 @@ class residentscontroller extends Controller
 
     public function residentsAdmin()
     {
-        $residentTypes = ResidentsType::all();
-        $houses = House::all();
-        $residents = Resident::with(['residents_type', 'houses'])->get();
 
-        return view('residentes', compact('residents', 'houses', 'residentTypes'));
+
+        $customResidents = DB::table('house_residents as hr')
+        ->select(
+            'hr.resident_id',
+            'r.name',
+            'r.email',
+            'r.phone',
+            'rt.name as type_name',
+            'h.address',
+            'r.qr_code',
+            'h.house_id',
+            'rt.type_id'
+        )
+        ->join('residents as r', 'r.resident_id', '=', 'hr.resident_id')
+        ->join('houses as h', 'h.house_id', '=', 'hr.house_id')
+        ->join('residents_type as rt', 'rt.type_id', '=', 'r.type_resident_id')
+        ->where('hr.resident_id', '<>', 3)
+        ->orderBy('r.name')
+        ->get();
+
+        $houses = DB::table('houses as h')
+            ->select('h.house_id', 'h.address')
+            ->leftJoin('house_residents as hr', 'h.house_id', '=', 'hr.house_id')
+            ->whereNull('hr.house_id')
+            ->where('h.status', '<>', 'HABITADA')
+            ->orderBy('h.address')
+            ->get();
+
+        $housesAll = House::all();
+
+        $residentTypes = ResidentsType::all();
+
+        return view('residentes', compact('customResidents', 'houses', 'residentTypes', 'housesAll'));
     }
 
     public function crearResidentes(Request $request)
@@ -36,10 +69,9 @@ class residentscontroller extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:residents,email',
             'phone' => 'nullable|string|max:20',
-            'houses' => 'required|array',
-            'houses.*' => 'exists:houses,house_id'
+            'house_id' => 'required|exists:houses,house_id',
         ]);
-
+        
         // Crear residente
         $resident = Resident::create([
             'name' => $validated['name'],
@@ -51,16 +83,18 @@ class residentscontroller extends Controller
             'registration_date' => now()
         ]);
 
-        // Asignar casas con datos del pivote
-        if ($request->has('houses')) {
-            foreach ($request->houses as $houseId) {
-                $resident->houses()->attach($houseId, [
-                    'role' => 'propietario',
-                    'start_date' => now(),
-                    'end_date' => null
-                ]);
-            }
-        }
+
+        $roleMap = [
+            1 => 'Administrador',
+            2 => 'Propietario',
+            3 => 'Inquilino'
+        ];
+        
+        $resident->houses()->attach($validated['house_id'], [
+            'role' => $roleMap[$validated['type_resident_id']],
+            'start_date' => now(),
+            'end_date' => null
+        ]);
 
         return redirect()->route('residentesAdmin')
             ->with('success', 'Residente creado exitosamente');
@@ -86,5 +120,14 @@ class residentscontroller extends Controller
         $pdf = Pdf::loadView('qr-pdf', compact('base64QR'));
         $pdf->setOption('enable_remote', true);
         return $pdf->download("qr-1.pdf");
+    }
+
+    public function deleteResident($id)
+    {
+        $resident = Resident::findOrFail($id);
+        $resident->delete();
+
+        return redirect()->route('residentesAdmin')
+            ->with('success', 'Residente eliminado exitosamente');
     }
 }

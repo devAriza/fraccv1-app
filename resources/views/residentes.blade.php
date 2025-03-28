@@ -16,14 +16,16 @@
                         <th>Contacto</th>
                         <th>Tipo</th>
                         <th>Dirección Asociada</th>
-                        <!-- <th>Estado</th> -->
                         <th>QR</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($residents as $resident)
+                    @foreach($customResidents as $resident)
                     <tr>
+                        <td class="fw-bold" hidden>
+                            {{ $resident->resident_id }}
+                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-user-circle me-2 text-muted"></i>
@@ -37,55 +39,42 @@
                             </div>
                         </td>
                         <td>
-                            @switch($resident->residents_type->name)
-                                @case('propietario')
-                                    <span class="badge bg-primary">PROPIETARIO</span>
-                                    @break
-                                @case('arrendatario')
-                                    <span class="badge bg-warning text-dark">ARRENDATARIO</span>
-                                    @break
-                                @default
-                                    <span class="badge bg-secondary">ADMINISTRACIÓN</span>
+                            @switch($resident->type_name)
+                            @case('Propietario')
+                            <span class="badge bg-primary">PROPIETARIO</span>
+                            @break
+                            @case('Arrendatario')
+                            <span class="badge bg-warning text-dark">ARRENDATARIO</span>
+                            @break
+                            @default
+                            <span class="badge bg-secondary">ADMINISTRACIÓN</span>
                             @endswitch
                         </td>
                         <td>
-                            @if($resident->houses->isNotEmpty())
-                                {{ $resident->houses->sortByDesc(function($house) {
-                                    return $house->pivot->start_date;
-                                })->first()->address }}
-                            @else
-                                <span class="text-muted">Sin propiedad asignada</span>
-                            @endif
+                            {{ $resident->address }}
                         </td>
-                        <!-- <td>
-                            @if($resident->houses->where('pivot.end_date', null)->isNotEmpty())
-                                <span class="badge bg-success">ACTIVO</span>
-                            @else
-                                <span class="badge bg-secondary">INACTIVO</span>
-                            @endif
-                        </td> -->
                         <td>
-                            <a href="" 
-                            class="btn btn-sm btn-success"
-                            title="Descargar QR">
+                            <a href=""
+                                class="btn btn-sm btn-success"
+                                title="Descargar QR">
                                 <i class="fas fa-download"></i>
                             </a>
                         </td>
                         <td>
                             <div class="d-flex gap-2">
-                                <a href="" 
+                                <button
                                     class="btn btn-sm btn-primary"
-                                    title="Editar residente">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="" method="POST">
-                                    <button type="submit" 
-                                            class="btn btn-sm btn-danger"
-                                            title="Eliminar residente"
-                                            onclick="return confirm('¿Está seguro de eliminar este residente?')">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
+                                    title="Editar residente"
+                                    onclick="openModalUpdateResident(
+                                    '{{ $resident->resident_id }}',
+                                    '{{ $resident->name }}',
+                                    '{{ $resident->phone }}',
+                                    '{{ $resident->email }}',
+                                    '{{ $resident->house_id }}',
+                                    '{{ $resident->type_id }}'
+                                    )"><i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" title="Eliminar residente" onclick="openModalDeleteResident()"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -119,27 +108,29 @@
                                 <input type="tel" name="phone" id="floatingPhoneResident" class="form-control" placeholder="Teléfono">
                                 <label for="floatingPhoneResident">Teléfono</label>
                             </div>
-                        </div>
-                        <div class="row gap-3 py-3">
                             <div class="col form-floating">
                                 <input type="email" name="email" id="floatingEmailResident" class="form-control" placeholder="Email" required>
                                 <label for="floatingEmailResident">Email</label>
                             </div>
+                        </div>
+                        <div class="row gap-3 py-3">
+
                             <!-- Select de Direcciones -->
                             <div class="col form-floating">
-                                <select name="houses[]" class="form-select" multiple size="2">
+                                <select name="house_id" class="form-select">
+                                <option value="">Seleccione una dirección</option>
                                     @foreach($houses as $house)
-                                        <option value="{{ $house->house_id }}">{{ $house->address }}</option>
+                                    <option value="{{ $house->house_id }}">{{ $house->address }}</option>
                                     @endforeach
                                 </select>
-                                <label class="form-label">Selecciona dirección/es</label>
+                                <label class="form-label">Selecciona dirección</label>
                             </div>
                             <!-- Campo Tipo de Residente -->
                             <div class="col form-floating">
                                 <select name="type_resident_id" class="form-select" required>
                                     <option value="">Seleccione un tipo</option>
                                     @foreach($residentTypes as $type)
-                                        <option value="{{ $type->type_id }}">{{ $type->name }}</option>
+                                    <option value="{{ $type->type_id }}">{{ $type->name }}</option>
                                     @endforeach
                                 </select>
                                 <label class="form-label">Tipo de residente</label>
@@ -164,19 +155,32 @@
                 <div class="justify-content-between row">
                     <h4 class="modal-title fw-bold col-xl-5 h5 mb-1">Editar residente</h4><button class="btn-close me-2" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
                     <div class="row gap-3 py-3">
-                        <div class="form-floating col"><input type="text" id="floatingNameResident-2" class="form-control" placeholder="Nombre completo"><label class="form-label" for="floatingNameResident">Nombre completo</label></div>
-                        <div class="col form-floating"><input type="text" id="floatingPhoneResident-2" class="form-control" placeholder="Teléfono"><label class="form-label" for="floatingPhoneResident">Teléfono</label></div>
-                        <div class="col form-floating"><input type="text" id="floatingEmailResident-2" class="form-control" placeholder="Email"><label class="form-label" for="floatingEmailResident-2">Email</label></div>
+                        <div class="form-floating col"><input type="text" id="editNameResident" class="form-control" placeholder="Nombre completo"><label class="form-label" for="floatingNameResident">Nombre completo</label></div>
+                        <div class="col form-floating"><input type="text" id="editPhoneResident" class="form-control" placeholder="Teléfono"><label class="form-label" for="floatingPhoneResident">Teléfono</label></div>
+                        <div class="col form-floating"><input type="text" id="editEmailResident" class="form-control" placeholder="Email"><label class="form-label" for="floatingEmailResident-2">Email</label></div>
                     </div>
                     <div class="row gap-3 py-3">
                         <div class="col">
-                            <div class="form-floating"><select class="form-select">
-                                    <optgroup label="This is a group">
-                                        <option value="12" selected="">This is item 1</option>
-                                        <option value="13">This is item 2</option>
-                                        <option value="14">This is item 3</option>
-                                    </optgroup>
-                                </select><label class="form-label">Selecciona dirección/es</label></div>
+                            <div class="form-floating">
+                                <select name="address" id="editHouseResident" class="form-select" required>
+                                <option value="">Seleccione una dirección</option>
+                                    @foreach($housesAll as $houseAll)
+                                    <option value="{{ $houseAll->house_id }}">{{ $houseAll->address }}</option>
+                                    @endforeach
+                                </select>
+                                <label class="form-label">Selecciona dirección</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col form-floating">
+                                <select name="type_resident_id" id="editTypeResident" class="form-select" required>
+                                <option value="">Seleccione un tipo</option>
+                                    @foreach($residentTypes as $type)
+                                    <option value="{{ $type->type_id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label class="form-label">Tipo de residente</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -196,7 +200,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Cerrar</button><button class="btn btn-danger" type="button"><i class="fas fa-trash"></i>&nbsp; Eliminar</button></div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Cerrar</button>
+            <button class="btn btn-danger" type="button" ><i class="fas fa-trash"></i>&nbsp; Eliminar</button></div>
         </div>
     </div>
 </div>
