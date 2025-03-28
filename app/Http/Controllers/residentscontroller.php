@@ -28,23 +28,23 @@ class residentscontroller extends Controller
 
 
         $customResidents = DB::table('house_residents as hr')
-        ->select(
-            'hr.resident_id',
-            'r.name',
-            'r.email',
-            'r.phone',
-            'rt.name as type_name',
-            'h.address',
-            'r.qr_code',
-            'h.house_id',
-            'rt.type_id'
-        )
-        ->join('residents as r', 'r.resident_id', '=', 'hr.resident_id')
-        ->join('houses as h', 'h.house_id', '=', 'hr.house_id')
-        ->join('residents_type as rt', 'rt.type_id', '=', 'r.type_resident_id')
-        ->where('hr.resident_id', '<>', 3)
-        ->orderBy('r.name')
-        ->get();
+            ->select(
+                'hr.resident_id',
+                'r.name',
+                'r.email',
+                'r.phone',
+                'rt.name as type_name',
+                'h.address',
+                'r.qr_code',
+                'h.house_id',
+                'rt.type_id'
+            )
+            ->join('residents as r', 'r.resident_id', '=', 'hr.resident_id')
+            ->join('houses as h', 'h.house_id', '=', 'hr.house_id')
+            ->join('residents_type as rt', 'rt.type_id', '=', 'r.type_resident_id')
+            ->where('hr.resident_id', '<>', 3)
+            ->orderBy('r.name')
+            ->get();
 
         $houses = DB::table('houses as h')
             ->select('h.house_id', 'h.address')
@@ -71,7 +71,7 @@ class residentscontroller extends Controller
             'phone' => 'nullable|string|max:20',
             'house_id' => 'required|exists:houses,house_id',
         ]);
-        
+
         // Crear residente
         $resident = Resident::create([
             'name' => $validated['name'],
@@ -89,7 +89,7 @@ class residentscontroller extends Controller
             2 => 'Propietario',
             3 => 'Inquilino'
         ];
-        
+
         $resident->houses()->attach($validated['house_id'], [
             'role' => $roleMap[$validated['type_resident_id']],
             'start_date' => now(),
@@ -122,9 +122,9 @@ class residentscontroller extends Controller
         return $pdf->download("qr-1.pdf");
     }
 
-    public function deleteResident($id)
+    public function deleteResident($residentId)
     {
-        $resident = Resident::findOrFail($id);
+        $resident = Resident::findOrFail($residentId);
         $resident->delete();
 
         return redirect()->route('residentesAdmin')

@@ -74,7 +74,9 @@
                                     '{{ $resident->type_id }}'
                                     )"><i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-danger" title="Eliminar residente" onclick="openModalDeleteResident()"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-sm btn-danger" title="Eliminar residente" onclick="openModalDeleteResident('{{ $resident->resident_id }}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -118,7 +120,7 @@
                             <!-- Select de Direcciones -->
                             <div class="col form-floating">
                                 <select name="house_id" class="form-select">
-                                <option value="">Seleccione una dirección</option>
+                                    <option value="">Seleccione una dirección</option>
                                     @foreach($houses as $house)
                                     <option value="{{ $house->house_id }}">{{ $house->address }}</option>
                                     @endforeach
@@ -163,7 +165,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <select name="address" id="editHouseResident" class="form-select" required>
-                                <option value="">Seleccione una dirección</option>
+                                    <option value="">Seleccione una dirección</option>
                                     @foreach($housesAll as $houseAll)
                                     <option value="{{ $houseAll->house_id }}">{{ $houseAll->address }}</option>
                                     @endforeach
@@ -174,7 +176,7 @@
                         <div class="col">
                             <div class="col form-floating">
                                 <select name="type_resident_id" id="editTypeResident" class="form-select" required>
-                                <option value="">Seleccione un tipo</option>
+                                    <option value="">Seleccione un tipo</option>
                                     @foreach($residentTypes as $type)
                                     <option value="{{ $type->type_id }}">{{ $type->name }}</option>
                                     @endforeach
@@ -192,16 +194,23 @@
 <div class="modal fade" role="dialog" tabindex="-1" id="modalDeleteResident">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-body">
-                <div class="justify-content-between row">
-                    <h4 class="modal-title fw-bold col-xl-5 h5 mb-1">¿Estás seguro?</h4><button class="btn-close me-2" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
-                    <div class="row gap-3 py-3">
-                        <div class="col"><label class="form-label">Está acción no se puede deshacer. Eliminará permanentemente el residente del sistema.</label></div>
+            <form id="deleteResidentForm" method="POST">
+                @csrf
+                @method('DELETE') 
+                <div class="modal-body">
+                    <div class="justify-content-between row">
+                        <input type="hidden" name="residentId" id="deleteResidentId">
+                        <h4 class="modal-title fw-bold col-xl-5 h5 mb-1">¿Estás seguro?</h4><button class="btn-close me-2" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                        <div class="row gap-3 py-3">
+                            <div class="col"><label class="form-label">Está acción no se puede deshacer. Eliminará permanentemente el residente del sistema.</label></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Cerrar</button>
-            <button class="btn btn-danger" type="button" ><i class="fas fa-trash"></i>&nbsp; Eliminar</button></div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Eliminar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -209,7 +218,9 @@
 @endsection
 
 @push('scripts')
-
+<script>
+    var baseUrl = "{{ url('/') }}";  // Obtiene la URL base de Laravel
+</script>
 <script src="{{ asset('js/residentes.js')}}"></script>
 
 @endpush

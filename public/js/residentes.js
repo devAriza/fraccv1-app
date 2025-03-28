@@ -22,7 +22,14 @@ function openModalUpdateResident(resident_id, name, phone, email, house, type){
 
 }
 
-function openModalDeleteResident(){
+function openModalDeleteResident(residentId){
+    // Asignar el ID del residente al input oculto
+    document.getElementById("deleteResidentId").value = residentId;
+    
+    // Obtener el formulario y actualizar la URL con el ID correcto
+    let form = document.getElementById("deleteResidentForm");
+    form.action = baseUrl + "/residentes/eliminar/" + residentId;
+
     modalDeleteResident.show();
 }
 
